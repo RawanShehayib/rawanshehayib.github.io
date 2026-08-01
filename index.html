@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rawan Shehayib — Computer Engineering</title>
+<meta name="description" content="Rawan Shehayib — Computer Engineering student at Notre Dame working across embedded systems, signal processing, and machine learning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0A0E17;
+    --bg-surface: #10151F;
+    --bg-surface-2: #151B27;
+    --line: #232B3A;
+    --text: #F4F6F9;
+    --text-muted: #8B93A7;
+    --text-dim: #5C6478;
+    --amber: #FFB020;
+    --amber-dim: #6B4A12;
+    --teal: #00D9C0;
+    --teal-dim: #0B3B38;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --max: 1080px;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; text-decoration: none; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+  h1,h2,h3{ font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
+
+  /* NAV */
+  nav{
+    position: fixed; top:0; left:0; right:0; z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(10,14,23,0.75);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:64px; }
+  .nav-brand{ font-family: var(--font-mono); font-size:14px; color: var(--text); letter-spacing:0.02em; }
+  .nav-links{ display:flex; gap:28px; font-size:14px; color: var(--text-muted); }
+  .nav-links a{ transition: color .2s ease; }
+  .nav-links a:hover{ color: var(--teal); }
+  .nav-toggle{ display:none; }
+
+  /* HERO */
+  .hero{
+    position: relative;
+    min-height: 100vh;
+    display:flex; align-items:center;
+    padding-top: 90px; padding-bottom: 60px;
+    overflow: hidden;
+  }
+  #waveform{
+    position:absolute; inset:0; width:100%; height:100%;
+    opacity: 0.55;
+  }
+  .hero-content{ position:relative; z-index:2; }
+  .hero .eyebrow{ margin-bottom:18px; display:block; }
+  .hero h1{
+    font-size: clamp(42px, 7vw, 84px);
+    line-height: 1.02;
+    color: var(--text);
+  }
+  .hero h1 span{ color: var(--amber); }
+  .hero-sub{
+    margin-top: 22px;
+    max-width: 620px;
+    font-size: 18px;
+    color: var(--text-muted);
+  }
+  .hero-tags{
+    margin-top: 28px;
+    display:flex; flex-wrap:wrap; gap:10px;
+    font-family: var(--font-mono); font-size: 12.5px;
+  }
+  .tag{
+    border:1px solid var(--line);
+    color: var(--text-muted);
+    padding: 6px 12px;
+    border-radius: 100px;
+  }
+  .hero-links{ margin-top:36px; display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    transition: all .2s ease;
+  }
+  .btn-primary{ background: var(--amber); color: #1A1200; border-color: var(--amber); font-weight:600; }
+  .btn-primary:hover{ background:#ffc44d; }
+  .btn-ghost:hover{ border-color: var(--teal); color: var(--teal); }
+
+  section{ padding: 110px 0; border-top: 1px solid var(--line); }
+  .section-head{ margin-bottom: 52px; }
+  .section-head h2{ font-size: clamp(28px,4vw,40px); margin-top:10px; }
+  .section-head p{ color: var(--text-muted); margin-top:14px; max-width: 560px; }
+
+  /* ABOUT */
+  .about-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:48px; align-items:start; }
+  .about-grid p{ color: var(--text-muted); margin-bottom:16px; }
+  .about-grid p strong{ color: var(--amber); font-weight:600; }
+  .involvement{
+    border-left: 2px solid var(--teal-dim);
+    padding-left:20px;
+  }
+  .involvement-item{ margin-bottom:16px; }
+  .involvement-item .label{ font-family: var(--font-mono); font-size:12px; color: var(--teal); }
+  .involvement-item .desc{ color: var(--text-muted); font-size:14.5px; margin-top:2px; }
+
+  /* PROJECTS */
+  .project{
+    display:grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 44px;
+    padding: 44px 0;
+    border-top: 1px solid var(--line);
+    align-items:start;
+  }
+  .project:first-of-type{ border-top:none; padding-top:0; }
+  .project-media{
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-surface);
+    aspect-ratio: 4/3;
+  }
+  .project-media img{ width:100%; height:100%; object-fit:cover; }
+  .project.no-media{ grid-template-columns: 1fr; }
+  .project.no-media .project-body{ max-width: 640px; }
+
+  /* DOC SLIDER */
+  .doc-slider{
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--bg-surface);
+    padding: 20px;
+  }
+  .doc-track{
+    display:flex; gap:14px;
+    overflow-x:auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .doc-track::-webkit-scrollbar{ display:none; }
+  .doc-card{
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: 168px;
+    aspect-ratio: 3/4;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--bg-surface-2);
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:12px;
+    padding: 18px;
+    text-align:center;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .doc-card:hover{ border-color: var(--teal); transform: translateY(-3px); }
+  .doc-card.pending{
+    border-style: dashed;
+    cursor: default;
+    opacity: 0.55;
+  }
+  .doc-card.pending:hover{ border-color: var(--line); transform:none; }
+  .doc-card svg{ width:34px; height:34px; stroke: var(--amber); }
+  .doc-card .doc-title{ font-size:13px; color: var(--text); font-weight:600; line-height:1.35; }
+  .doc-card .doc-type{ font-family: var(--font-mono); font-size:10.5px; color: var(--text-dim); letter-spacing:.08em; text-transform:uppercase; }
+  .doc-slider-hint{
+    margin-top:14px; font-family: var(--font-mono); font-size:11.5px; color: var(--text-dim);
+  }
+  .project-body .eyebrow{ margin-bottom:10px; }
+  .project-body h3{ font-size:22px; margin-bottom:12px; }
+  .project-body .desc{ color: var(--text-muted); font-size:15px; margin-bottom:18px; }
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .chip{
+    font-family: var(--font-mono); font-size:11.5px;
+    color: var(--amber);
+    border: 1px solid var(--amber-dim);
+    padding:4px 10px; border-radius:4px;
+  }
+  .project-links{ display:flex; gap:18px; font-family: var(--font-mono); font-size:13px; }
+  .project-links a{ color: var(--teal); border-bottom:1px solid transparent; }
+  .project-links a:hover{ border-bottom-color: var(--teal); }
+
+  /* SKILLS */
+  .skills-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:32px; }
+  .skill-group .label{ font-family: var(--font-mono); font-size:12px; color: var(--teal); text-transform:uppercase; letter-spacing:.1em; margin-bottom:14px; }
+  .skill-list{ display:flex; flex-wrap:wrap; gap:8px; }
+  .skill-pill{
+    font-size:13.5px; color: var(--text);
+    background: var(--bg-surface-2);
+    border:1px solid var(--line);
+    padding:6px 12px; border-radius:6px;
+  }
+
+  /* CONTACT */
+  .contact-box{
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;
+  }
+  .contact-box h2{ font-size: clamp(30px,5vw,52px); max-width:600px; }
+  .contact-links{ display:flex; gap:16px; }
+  footer{ padding:36px 0; text-align:center; color: var(--text-dim); font-family: var(--font-mono); font-size:12px; border-top:1px solid var(--line); }
+
+  @media (max-width: 860px){
+    .nav-links{ display:none; }
+    .about-grid{ grid-template-columns:1fr; }
+    .project{ grid-template-columns:1fr; }
+    .skills-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 520px){
+    .skills-grid{ grid-template-columns:1fr; }
+    section{ padding:72px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    #waveform{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="nav-brand" href="#top">rawan.shehayib()</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <canvas id="waveform"></canvas>
+  <div class="wrap hero-content">
+    <span class="eyebrow">Computer Engineering · University of Notre Dame</span>
+    <h1>Rawan<br>Shehayib</h1>
+    <p class="hero-sub">
+      Junior at Notre Dame studying Computer Engineering, minoring in Energy Studies. I co-lead
+      IrishSat's computing team, work on bioacoustic signal processing research at Trinity College Dublin,
+      and build the software that sits between sensors, controls, and the models that make sense of them.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Embedded Systems</span>
+      <span class="tag">Signal Processing</span>
+      <span class="tag">Machine Learning</span>
+      <span class="tag">Controls</span>
+    </div>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="#projects">See the work</a>
+      <a class="btn btn-ghost" href="assets/docs/Rawan_Shehayib_Resume.pdf" target="_blank" rel="noopener">Download resume ↗</a>
+      <a class="btn btn-ghost" href="#contact">Say hello</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">About</span>
+      <h2>Background</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>
+          I'm a junior at the <strong>University of Notre Dame</strong> studying Computer Engineering with a
+          minor in Energy Studies, graduating May 2028 as a full scholarship recipient. Most of my work lives
+          at the intersection of hardware and software: navigating sensors, building control systems, and
+          training models that have to satisfy both the math and the physical constraints around them.
+        </p>
+        <p>
+          On campus, I co-lead <strong>IrishSat's computing team</strong>, where we build software
+          management systems and develop models that satisfy both control and hardware needs. For two
+          academic years I've worked on Python-based systems that navigate sensors, reaction wheels,
+          computer vision algorithms, and orbital simulations.
+        </p>
+        <p>
+          Alongside team projects, I'm drawn to research. I've worked on an AI-powered food information
+          system for public nutrition, spent a summer studying bioacoustic data at Trinity College Dublin,
+          and collaborated internationally on a satellite-adjacent USV control system in Japan.
+        </p>
+      </div>
+      <div class="involvement">
+        <div class="involvement-item">
+          <div class="label">CS4GOOD — TEAM LEAD</div>
+          <div class="desc">Leading a 5-member team building a math-learning platform for local community centers — roadmap, deliverables, and workflow.</div>
+        </div>
+        <div class="involvement-item">
+          <div class="label">TRANSFORMATIONAL LEADERSHIP PROGRAM</div>
+          <div class="desc">Selective leadership development cohort at Notre Dame.</div>
+        </div>
+        <div class="involvement-item">
+          <div class="label">GALVIN SCHOLARS PROGRAM</div>
+          <div class="desc">Engineering scholars program for academic and professional growth.</div>
+        </div>
+        <div class="involvement-item">
+          <div class="label">CALCULUS TUTOR & INTERNATIONAL STUDENT AMBASSADOR</div>
+          <div class="desc">Tutored 10+ incoming engineering students in Calculus I & II and support students' transition to Notre Dame before move-in.</div>
+        </div>
+        <div class="involvement-item">
+          <div class="label">STUDY ABROAD — UNIVERSITY COLLEGE DUBLIN</div>
+          <div class="desc">Engineering study abroad, summer 2025.</div>
+        </div>
+        <div class="involvement-item">
+          <div class="label">LANGUAGES</div>
+          <div class="desc">English (native), Arabic (native), French (intermediate).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Selected Work</span>
+      <h2>Projects &amp; research</h2>
+      <p>Four projects spanning satellite controls, HCI research, bioacoustic signal processing, and international collaboration.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-media">
+        <div class="doc-slider">
+          <div class="doc-track">
+            <a class="doc-card" href="assets/docs/CHARMS_Software_Report.pdf" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+              <div class="doc-title">Technical Report</div>
+              <div class="doc-type">PDF</div>
+            </a>
+            <a class="doc-card" href="assets/images/irishsat-poster.jpg" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+              <div class="doc-title">Research Poster</div>
+              <div class="doc-type">Image</div>
+            </a>
+          </div>
+          <div class="doc-slider-hint">Click a card to open ↗</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <span class="eyebrow">IrishSat — Lead Computing &amp; Controls Engineer</span>
+        <h3>CHARMS: attitude control without a GPS</h3>
+        <p class="desc">
+          I oversee the computing and controls function of IrishSat's student-built satellite, setting
+          technical direction and aligning 15+ cross-functional engineers around a shared roadmap. CHARMS,
+          our magnetorquer-only Attitude Determination and Control System, launched aboard SpaceX's
+          Transporter-16 mission in March 2026 — IrishSat's first flight software — and I coordinated
+          directly with NearSpace and SpaceX to make sure every software requirement was met before launch.
+          On the technical side, I built a Python-based sensor management system for our Raspberry Pi
+          satellite simulator that cut debugging time by 40%, and designed the computer vision algorithms
+          behind autonomous horizon detection, validated against 80+ images, so the satellite can determine
+          its orientation without ground-station intervention.
+        </p>
+        <div class="chips">
+          <span class="chip">Python</span>
+          <span class="chip">C</span>
+          <span class="chip">OpenCV</span>
+          <span class="chip">RTOS</span>
+          <span class="chip">Computer Vision</span>
+          <span class="chip">Controls</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project">
+      <div class="project-media">
+        <div class="doc-slider">
+          <div class="doc-track">
+            <div class="doc-card pending">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+              <div class="doc-title">Research Report</div>
+              <div class="doc-type">Coming soon</div>
+            </div>
+          </div>
+          <div class="doc-slider-hint">Click a card to open ↗</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <span class="eyebrow">MetoyerLab — Undergraduate Research Assistant</span>
+        <h3>AI-powered food information system</h3>
+        <p class="desc">
+          Working with a 4-person team, I helped build an AI-powered nutrition platform using the OpenAI
+          API, solving a three-way tradeoff between cost, nutrition, and dietary goals through optimization
+          algorithms. The research was published at CHI'26. I worked directly with 55 low-income households
+          across an 8-week study, collecting and processing dietary data to power personalized grocery
+          recommendations.
+        </p>
+        <div class="chips">
+          <span class="chip">Optimization</span>
+          <span class="chip">APIs</span>
+          <span class="chip">Web App</span>
+          <span class="chip">HCI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project no-media">
+      <div class="project-body">
+        <span class="eyebrow">Trinity College Dublin — Research Assistant, ML for Audio Signal Processing</span>
+        <h3>Fine-tuning audio models on bioacoustic data</h3>
+        <p class="desc">
+          Working with Professor Nils Peters, I'm developing a fine-tuning and multimodal retrieval
+          framework to improve detection reliability and enable archive-wide pattern search for detecting
+          environmental events across years of recordings. I standardized 5,445 human annotations across
+          inconsistently formatted files into a unified 16-class taxonomy, and I'll be presenting findings
+          at an upcoming poster session with a live user-interface model, translating the technical results
+          for a non-technical audience.
+        </p>
+        <div class="chips">
+          <span class="chip">DSP</span>
+          <span class="chip">Audio ML</span>
+          <span class="chip">Fine-tuning</span>
+          <span class="chip">Acoustic Ecology</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project no-media">
+      <div class="project-body">
+        <span class="eyebrow">Kyutech University — Underwater Robotics Intern</span>
+        <h3>iOS teleoperation for an unmanned surface vehicle</h3>
+        <p class="desc">
+          Built a native iOS control app in SwiftUI that connects to ROS2 over WebSocket, enabling
+          real-time teleoperation with a live video feed and connection signal monitoring. I resolved
+          network configuration failures across all three environments — simulation, testbed, and live
+          hardware — taking the pipeline from simulation to physical control, in collaboration with a
+          four-member international team spanning Japan and the U.S.
+        </p>
+        <div class="chips">
+          <span class="chip">Swift / SwiftUI</span>
+          <span class="chip">ROS2</span>
+          <span class="chip">WebSocket</span>
+          <span class="chip">Networking</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Toolbox</span>
+      <h2>Skills &amp; tools</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="label">Languages</div>
+        <div class="skill-list">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">C</span>
+          <span class="skill-pill">C++</span>
+          <span class="skill-pill">MATLAB</span>
+          <span class="skill-pill">Java</span>
+          <span class="skill-pill">SystemVerilog</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Tools &amp; Hardware</div>
+        <div class="skill-list">
+          <span class="skill-pill">Git</span>
+          <span class="skill-pill">Linux</span>
+          <span class="skill-pill">PCB Design</span>
+          <span class="skill-pill">SolidWorks</span>
+          <span class="skill-pill">FPGAs</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="label">Ways of Working</div>
+        <div class="skill-list">
+          <span class="skill-pill">Teamwork</span>
+          <span class="skill-pill">Leadership</span>
+          <span class="skill-pill">Communication</span>
+          <span class="skill-pill">Problem Solving</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2>Let's build something across disciplines.</h2>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:rshehay2@nd.edu">rshehay2@nd.edu</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/rawan-shehayib/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn btn-ghost" href="assets/docs/Rawan_Shehayib_Resume.pdf" target="_blank" rel="noopener">Resume ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Rawan Shehayib — built with plain HTML, CSS, and a little JS.
+</footer>
+
+<script>
+  // Signature hero visual: an animated, layered signal waveform
+  // (nods to DSP/acoustic work + satellite telemetry)
+  const canvas = document.getElementById('waveform');
+  const ctx = canvas.getContext('2d');
+  let w, h, t = 0;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+    h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function drawWave(amplitude, freq, phase, color, lineWidth){
+    ctx.beginPath();
+    for(let x = 0; x <= w; x += 4){
+      const y = h*0.62
+        + Math.sin((x/w)*Math.PI*freq + phase) * amplitude
+        + Math.sin((x/w)*Math.PI*freq*2.3 + phase*1.7) * (amplitude*0.35);
+      if(x === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+  }
+
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    drawWave(h*0.05, 3.2, t*0.6, 'rgba(0,217,192,0.55)', 2*devicePixelRatio);
+    drawWave(h*0.03, 5.1, t*0.9 + 1.5, 'rgba(255,176,32,0.35)', 1.5*devicePixelRatio);
+    drawWave(h*0.015, 8.4, t*1.3 + 3, 'rgba(244,246,249,0.12)', 1*devicePixelRatio);
+    t += 0.01;
+    if(!prefersReduced) requestAnimationFrame(frame);
+  }
+  frame();
+</script>
+
+</body>
+</html>
